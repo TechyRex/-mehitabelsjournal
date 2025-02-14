@@ -7,15 +7,6 @@
   <!-- Include the Supabase JS library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
-    /* Global Styles */
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('assets/img/Meh2.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: Arial, sans-serif;
-      color: #444444;
-    }
     .container {
       max-width: 400px;
       margin: 80px auto;
@@ -65,7 +56,7 @@
     }
   </style>
 </head>
-<body>
+<body style="background: url('assets/img/Meh2.jpg') no-repeat center center fixed; background-size: cover;">
   <!-- Sign Up Form -->
   <div class="container" id="signupForm">
     <h2>Create an Account</h2>
@@ -128,7 +119,7 @@
         alert('Login error: ' + error.message);
       } else {
         alert('Login successful! Redirecting...');
-        window.location.href = 'index.html';
+        window.location.href = 'https://mehitabelsjournal.zapto.org/index.html';
       }
     }
   </script>
