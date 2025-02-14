@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supabase Auth - Login/Signup</title>
+  <!-- Include the Supabase JS library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    /* Global Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('assets/img/Meh2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: #444444;
+    }
+    .container {
+      max-width: 400px;
+      margin: 80px auto;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #CD853F;
+    }
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      background-color: #CD853F;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #b56a33;
+    }
+    .switch-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .switch-link span {
+      color: #CD853F;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sign Up Form -->
+  <div class="container" id="signupForm">
+    <h2>Create an Account</h2>
+    <input type="email" id="signup-email" placeholder="Email" required />
+    <input type="password" id="signup-password" placeholder="Password" required />
+    <input type="text" id="signup-name" placeholder="Name (optional)" />
+    <button onclick="signUp()">Sign Up</button>
+    <div class="switch-link">
+      Already have an account? <span onclick="showLoginForm()">Log In</span>
+    </div>
+  </div>
+
+  <!-- Login Form -->
+  <div class="container" id="loginForm" style="display: none;">
+    <h2>Log In</h2>
+    <input type="email" id="login-email" placeholder="Email" required />
+    <input type="password" id="login-password" placeholder="Password" required />
+    <button onclick="logIn()">Log In</button>
+    <div class="switch-link">
+      Don't have an account? <span onclick="showSignupForm()">Sign Up</span>
+    </div>
+  </div>
+
+  <script>
+    // Initialize your Supabase client with a new variable name (supabaseClient)
+    const supabaseUrl = 'https://ysgtybtsjxllkijyxkhp.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlzZ3R5YnRzanhsbGtpanl4a2hwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1MzU3NzcsImV4cCI6MjA1NTExMTc3N30.bvFIcmy8brba3Oy-6sRPZOsurcm2nCM0o-0i_B-sgZo';
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Show/Hide form toggling
+    function showLoginForm() {
+      document.getElementById('signupForm').style.display = 'none';
+      document.getElementById('loginForm').style.display = 'block';
+    }
+    function showSignupForm() {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('signupForm').style.display = 'block';
+    }
+
+    // Sign up a new user using Supabase Auth (v2)
+    async function signUp() {
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      // Optional name field (store separately if needed)
+      const { data, error } = await supabaseClient.auth.signUp({ email, password });
+      if (error) {
+        alert('Signup error: ' + error.message);
+      } else {
+        alert('Signup successful! Please log in.');
+        showLoginForm();
+      }
+    }
+
+    // Log in an existing user using Supabase Auth (v2)
+    async function logIn() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) {
+        alert('Login error: ' + error.message);
+      } else {
+        alert('Login successful! Redirecting...');
+        window.location.href = 'index.html';
+      }
+    }
+  </script>
+</body>
+</html>
